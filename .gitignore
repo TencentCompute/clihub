@@ -1,0 +1,16 @@
+node_modules
+out
+.DS_Store
+*.vsix
+.env
+.vscode-test
+# BMAD (local only)
+.bmad-core/
+.bmad-*/
+.claude
+.codebuddy
+.gemini
+.windsurf
+CLAUDE.md
+.agent
+.vscode/settings.json

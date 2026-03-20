@@ -1,0 +1,44 @@
+[
+  {
+    "id": "codex",
+    "label": "Codex",
+    "description": "OpenAI Codex",
+    "command": "codex",
+    "packageName": "@openai/codex"
+  },
+  {
+    "id": "claude",
+    "label": "Claude Code",
+    "description": "Anthropic Claude Code",
+    "command": "claude",
+    "packageName": "@anthropic-ai/claude-code"
+  },
+  {
+    "id": "codebuddy",
+    "label": "Codebuddy",
+    "description": "Tencent AI Codebuddy",
+    "command": "codebuddy",
+    "packageName": "@tencent-ai/codebuddy-code"
+  },
+  {
+    "id": "copilot",
+    "label": "Copilot",
+    "description": "GitHub Copilot CLI",
+    "command": "copilot",
+    "packageName": "@github/copilot"
+  },
+  {
+    "id": "cursor-agent",
+    "label": "Cursor CLI",
+    "description": "Cursor CLI (cursor-agent)",
+    "command": "cursor-agent",
+    "installCommand": "curl https://cursor.com/install -fsS | bash"
+  },
+  {
+    "id": "gemini",
+    "label": "Gemini CLI",
+    "description": "Google Gemini CLI",
+    "command": "gemini",
+    "packageName": "@google/gemini-cli"
+  }
+]

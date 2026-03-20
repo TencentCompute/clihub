@@ -1,0 +1,179 @@
+{
+  "name": "cli-hub",
+  "displayName": "CLI Hub: AI Tools Terminal",
+  "description": "Open and manage multiple AI CLI terminal sessions in VS Code.",
+  "version": "1.4.2",
+  "publisher": "clihub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hxy91819/clihub.git"
+  },
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "icons/cli-hub-icon.png",
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:clihub.openTerminalEditor",
+    "onCommand:clihub.openNewTerminalSession",
+    "onCommand:clihub.sendPathToTerminal",
+    "onCommand:clihub.switchAITool",
+    "onCommand:clihub.setGlobalDefaultTool",
+    "onCommand:clihub.refreshDetection",
+    "onCommand:clihub.showLogs"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "CLI Hub Terminal",
+      "properties": {
+        "clihub.terminalCommand": {
+          "type": "string",
+          "default": "codebuddy",
+          "markdownDescription": "The command to run when opening the terminal. Supports AI CLI tools like `codebuddy`, `gemini`, `claude`, etc.",
+          "order": 0
+        },
+        "clihub.autoShowLogsOnStartup": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Whether to automatically show 'Log (CLI Hub Terminal)' at startup. Logs are always recorded; when false, Output panel will not pop up.",
+          "order": 4
+        },
+        "clihub.nativeTerminalLocation": {
+          "type": "string",
+          "enum": [
+            "panel",
+            "right"
+          ],
+          "enumDescriptions": [
+            "Keep the terminal in the panel without forcing a layout change.",
+            "Force the terminal panel to move to the right side when CLI Hub opens or reuses a terminal."
+          ],
+          "default": "panel",
+          "markdownDescription": "Controls where CLI Hub shows native terminals. Default `panel` keeps your current layout. Set to `right` to force the terminal panel to the right side.",
+          "order": 5
+        },
+        "clihub.toolArguments": {
+          "type": "object",
+          "default": {},
+          "markdownDescription": "Custom command-line arguments for each AI tool. Use the tool id as the key. Common YOLO mode examples:\n- Copilot: `--allow-all-tools`\n- Claude: `--dangerously-skip-permissions`\n- Codebuddy: `--dangerously-skip-permissions`\n- Codex: `--full-auto`\n- Gemini: `--yolo`\n- Cursor Agent: `--force`",
+          "order": 6,
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "clihub.toolEnvironments": {
+          "type": "object",
+          "default": {},
+          "markdownDescription": "Custom environment variables for each AI tool. Use the tool id as the key. Example:\n`\"clihub.toolEnvironments\": { \"claude\": { \"IS_SANDBOX\": \"1\" } }`",
+          "order": 7,
+          "additionalProperties": {
+            "type": "object",
+            "default": {},
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "clihub.openTerminalEditor",
+        "title": "Open Terminal",
+        "category": "CLI Hub",
+        "icon": {
+          "light": "icons/cli-hub-button.svg",
+          "dark": "icons/cli-hub-button.svg"
+        }
+      },
+      {
+        "command": "clihub.openNewTerminalSession",
+        "title": "Open New Terminal Session",
+        "category": "CLI Hub"
+      },
+      {
+        "command": "clihub.sendPathToTerminal",
+        "title": "Send File Path to AI Tool Terminal",
+        "category": "CLI Hub"
+      },
+      {
+        "command": "clihub.switchAITool",
+        "title": "Switch AI Tool",
+        "category": "CLI Hub",
+        "icon": "$(extensions-sync-enabled)"
+      },
+      {
+        "command": "clihub.setGlobalDefaultTool",
+        "title": "Set Global Default AI Tool",
+        "category": "CLI Hub"
+      },
+      {
+        "command": "clihub.refreshDetection",
+        "title": "Refresh Tool Installation Detection",
+        "category": "CLI Hub"
+      },
+      {
+        "command": "clihub.showLogs",
+        "title": "Show CLI Hub Logs",
+        "category": "CLI Hub"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "clihub.sendPathToTerminal",
+        "key": "ctrl+shift+j",
+        "mac": "cmd+shift+j"
+      },
+      {
+        "command": "clihub.openNewTerminalSession",
+        "key": "ctrl+alt+shift+j",
+        "mac": "cmd+ctrl+shift+j"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "clihub.openTerminalEditor",
+          "group": "navigation@9",
+          "when": "resourceScheme != 'vscode-terminal'"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "clihub.sendPathToTerminal",
+          "group": "navigation",
+          "when": "editorFocus"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "clihub.sendPathToTerminal",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "test:unit": "node ./out/test/runTest.js --grep 'Unit'",
+    "test:integration": "node ./out/test/runTest.js --grep 'Integration'",
+    "bmad:refresh": "bmad-method install -f -i codex",
+    "bmad:list": "bmad-method list:agents",
+    "bmad:validate": "bmad-method validate"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.6.2",
+    "@types/vscode": "1.99.0",
+    "@vscode/test-electron": "^2.5.2",
+    "mocha": "^11.7.4",
+    "typescript": "^5.9.3"
+  }
+}
